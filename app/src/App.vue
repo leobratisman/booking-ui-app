@@ -13,8 +13,8 @@
 						<v-list-item
 							v-if="user"
 							prepend-icon="mdi-account-circle"
-							:subtitle="user.role"
-							:title="user.email"
+							:subtitle="user.email"
+							:title="user.username"
 						></v-list-item>
 						<v-list-item
 							v-else
@@ -28,7 +28,7 @@
 
 					<v-list density="compact" nav>
 						<v-list-item prepend-icon="mdi-account" to="/me" title="Мой профиль" value="starred"></v-list-item>
-						<v-list-item prepend-icon="mdi-home-search" to="/" title="Отели" value="Отели"></v-list-item>
+						<v-list-item prepend-icon="mdi-home-search" to="/hotels" title="Отели" value="Отели"></v-list-item>
 						<v-list-item prepend-icon="mdi-book-edit" to="/bookings" title="Мои бронирования" value="shared"></v-list-item>
 					</v-list>
 

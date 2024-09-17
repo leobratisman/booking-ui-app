@@ -1,13 +1,15 @@
 <template>
-    <v-sheet class="mx-auto" width="400">
-        <v-form>
+    <v-sheet class="mx-auto search-form" width="400">
 
+        <h1 style="text-align: center; margin-bottom: 20px;">Найди свой отель</h1>
+
+        <v-form>
             <v-text-field
-                v-model="filterForm.location"
+                v-model="location"
                 label="Локация"
             ></v-text-field>
 
-            <div class="date-block">
+            <v-container v-if="location != null && location != ''" class="date-block">
                 <p>Дата бронирования</p>
 
                 <div class="date">
@@ -23,55 +25,94 @@
                         label="До"
                     ></v-text-field>
                 </div>
-            </div>
+            </v-container>
         </v-form>
         <v-btn
+            v-if="
+            (location != null && location != '') &&
+            (filterForm.dateFrom != null && filterForm.dateFrom != '') &&
+            (filterForm.dateTo != null && filterForm.dateTo != '')
+            "
             block
             color="green"
-            class="me-4"
+            class="me-4 submit-btn"
             @click="submitFilters"
             >
-            Применить
+            Найти
         </v-btn>
+        <div class="divider"></div>
   </v-sheet>
 </template>
 
 <script setup>
     import { ref } from 'vue';
+    import { storeToRefs } from 'pinia';
     
     import { useBaseStore } from '../store/modules/base';
-
-    // import { IHotelFilterForm } from '../interfaces/HotelFilterFormInterface'
+    import router from '../router/index';
 
     const baseStore = useBaseStore();
+    const { hotels } = storeToRefs(baseStore);
+
+    const location = ref(null);
 
     const filterForm = ref({
-        location: null,
         dateFrom: null,
         dateTo: null
     });
 
     const submitFilters = async () => {
-        const cleanedFilters = {};
-  
-        if (filterForm.value.location !== null) {
-            cleanedFilters.location = filterForm.value.location;
+        await baseStore.fetchHotelsByFilters(location.value, filterForm.value);
+        if (hotels.value.length > 0) {
+            router.push({path: "/hotels"});
+        } else {
+            alert('По вашему запросу ничего не найдено!')
         }
-        if (filterForm.value.dateFrom !== null) {
-            cleanedFilters.dateFrom = filterForm.value.dateFrom;
-        }
-        if (filterForm.value.dateTo !== null) {
-            cleanedFilters.dateTo = filterForm.value.dateTo;
-        }
-        console.log(cleanedFilters);
-        await baseStore.fetchHotelsByFilters(cleanedFilters);
     }
 
 </script>
 
 <style scoped>
+    @keyframes show{
+        0%{
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+            transform: translateX(0px);
+        }
+    }
+
     .date {
         display: flex;
         gap: 10px;
+    }
+
+    .date-block {
+        transform: translateX(-30px);
+        opacity: 0;
+        transition: 1s;
+        animation: show 0.8s 1;
+        animation-fill-mode: forwards;
+    }
+
+    .submit-btn {
+        transform: translateX(-30px);
+        opacity: 0;
+        transition: 1s;
+        animation: show 0.8s 1;
+        animation-fill-mode: forwards;
+    }
+
+    .search-form {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding-top: 100px;
+    }
+
+    .divider {
+        display: flex;
+        height: 100vh;
     }
 </style>

@@ -6,4 +6,6 @@ export interface ILoginForm {
 export interface IRegisterForm {
     email: string | null;
     password: string | null;
+    username: string | null;
+    age: number | null;
 }

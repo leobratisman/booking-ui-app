@@ -10,6 +10,20 @@
                 ></v-text-field>
 
                 <v-text-field
+                    v-model="registerForm.username"
+                    label="Username"
+                    :rules="usernameRules"
+                    required
+                ></v-text-field>
+
+                <v-text-field
+                    v-model="registerForm.age"
+                    label="Age"
+                    :rules="ageRules"
+                    required
+                ></v-text-field>
+
+                <v-text-field
                     v-model="registerForm.password"
                     label="Password"
                     :rules="passwordRules"
@@ -33,7 +47,9 @@
 
     const registerForm = ref<IRegisterForm>({
         email: null,
-        password: null
+        password: null,
+        age: null,
+        username: null
     })
 
     const emailRules = [
@@ -59,6 +75,32 @@
           if (value?.length >= 1) return true
 
           return 'Password must be greater than 0 characters.'
+        },
+    ]
+
+    const ageRules = [
+        value => {
+          if (value) return true
+
+          return 'Age is required.'
+        },
+        value => {
+          if (Number(value)) return true
+
+          return 'Age should be number'
+        },
+    ]
+
+    const usernameRules = [
+        value => {
+          if (value) return true
+
+          return 'Username is required.'
+        },
+        value => {
+            if (value?.length >= 1) return true
+
+            return 'Username must be greater than 0 characters.'
         },
     ]
 

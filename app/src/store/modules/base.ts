@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 
 import { BaseState } from './types';
+import { ITerm } from '../../interfaces/TermInterface';
 import { hotelApi } from '../../api/hotel';
-import { IHotelFilterForm } from '../../interfaces/HotelFilterFormInterface';
-
 
 const defaultState: BaseState = {
     hotels: [],
+    rooms: [],
     theme: 'dark',
 };
 
@@ -22,22 +22,30 @@ export const useBaseStore = defineStore('base-store', {
         },
 
         // Hotels
-        async fetchHotels() {
+        // async fetchHotels() {
+        //     try {
+        //         const response = await hotelApi.getHotels({});
+        //         this.hotels = response.data;
+        //     } catch (err) {
+        //         // console.log(err);
+        //     }
+        // },
+        async fetchHotelsByFilters(location: string, filters: ITerm) {
             try {
-                const response = await hotelApi.getHotels({});
+                const response = await hotelApi.getHotels(location, filters);
                 this.hotels = response.data;
             } catch (err) {
                 // console.log(err);
             }
         },
-        async fetchHotelsByFilters(filters: any) {
+        async fetchRoomsByHotel(hotelId: number, termParams: ITerm) {
             try {
-                const response = await hotelApi.getHotels(filters);
-                this.hotels = response.data;
+                const response = await hotelApi.getRoomsByHotel(hotelId, termParams);
+                this.rooms = response.data;
             } catch (err) {
                 // console.log(err);
             }
-        }
+        },
     }
 })
 

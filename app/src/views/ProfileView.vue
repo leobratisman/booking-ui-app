@@ -1,9 +1,13 @@
 <template>
     <div class="user-info-wrapper">
         <div v-if="isAuthorized" class="user-info-block">
-            <h1>Мой профиль</h1>
-            <p>{{ user?.email }}</p>
-            <p>{{ user?.role }}</p>
+            <h1 style="margin-bottom: 50px;">Мой профиль</h1>
+            <div class="user-info">
+                <h2 class="info-attribute" style="margin-bottom: 20px;">{{ user?.username }}</h2>
+                <p>email: <span class="info-attribute">{{ user?.email }}</span></p>
+                <p>age: <span class="info-attribute">{{ user?.age }}</span></p>
+                <p>role: <span class="info-attribute">{{ user?.role }}</span></p>
+            </div>
         </div>
         <div v-else>
             <h2>Вы не авторизованы</h2>
@@ -51,5 +55,16 @@
         display: flex;
         margin-left: 50px;
         align-items: center;
+    }
+
+
+    .user-info {
+        color: rgb(161, 161, 162);
+        border-right: 2px solid black;
+        padding: 30px 0;
+    }
+
+    .info-attribute {
+        font-size: 20px;
     }
 </style>

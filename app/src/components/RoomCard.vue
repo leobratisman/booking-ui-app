@@ -4,14 +4,17 @@
         <v-container class="hotel-info">
             <img style="height: 200px;" src="../images/1.jpg" alt="">
             <div class="hotel-info-text">
-                <h2>{{ hotelInfo.name }}</h2>
-                <p>{{ hotelInfo.location }}</p>
-                <p>{{ hotelInfo.rooms_quantity }}</p>
-                <p>{{ hotelInfo.rooms_left }}</p>
-                <div class="services">
-                    <span v-for="service in hotelInfo.services">{{ service }}</span>
+                <div>
+                    <h2>{{ RoomInfo.name }}</h2>
+                    <p>{{ RoomInfo.description }}</p>
+                    <div v-if="RoomInfo.services?.length > 0" class="services">
+                        <span v-for="service in RoomInfo.services">{{ service }}</span>
+                    </div>
+                    <p>Количество номеров: {{ RoomInfo.roomsLeft }}</p>
+                    <p>Цена за ночь: {{ RoomInfo.price }}р</p>
                 </div>
-                <v-btn @click="toHotel(hotelInfo.id)" variant="tonal" style="align-self: flex-end;" block color="green">Перейти</v-btn>
+                
+                <v-btn variant="tonal" style="align-self: flex-end; margin-top: 20px;" block color="primary">Забронировать</v-btn>
             </div>
         </v-container>
     </div>
@@ -21,16 +24,11 @@
 <script setup lang="ts">
     import { defineProps } from 'vue';
 
-    import { IHotel } from '../interfaces/HotelInterface';
-    import router from '../router/index';
+    import { IRoom } from '../interfaces/RoomInterface';
 
     defineProps<{
-        hotelInfo: IHotel
+        RoomInfo: IRoom
     }>()
-
-    const toHotel = (hotelId: number) => {
-        router.push({path: `hotels/${hotelId}/rooms`});
-    }
 </script>
 
 <style scoped>
@@ -38,7 +36,7 @@
         border: 1px solid rgb(235, 231, 231);
         border-radius: 10px;
         margin-bottom: 10px;
-        max-width: 700px;
+        max-width: 900px;
     }
 
     .hotel-info {
