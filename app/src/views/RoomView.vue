@@ -36,7 +36,7 @@
     })
 
     const backToHotels = () => {
-        router.push({path: '/'});
+        router.push({path: '/hotels'});
     }
 </script>
 

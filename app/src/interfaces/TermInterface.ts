@@ -1,4 +1,4 @@
 export interface ITerm {
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: string | null;
+    dateTo: string | null;
 }

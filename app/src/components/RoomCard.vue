@@ -14,7 +14,7 @@
                     <p>Цена за ночь: {{ RoomInfo.price }}р</p>
                 </div>
                 
-                <v-btn variant="tonal" style="align-self: flex-end; margin-top: 20px;" block color="primary">Забронировать</v-btn>
+                <v-btn @click="bookRoom" variant="tonal" style="align-self: flex-end; margin-top: 20px;" block color="primary">Забронировать</v-btn>
             </div>
         </v-container>
     </div>
@@ -25,10 +25,15 @@
     import { defineProps } from 'vue';
 
     import { IRoom } from '../interfaces/RoomInterface';
+    import router from '../router/index';
 
-    defineProps<{
+    const props = defineProps<{
         RoomInfo: IRoom
     }>()
+
+    const bookRoom = () => {
+        router.push({path: `/rooms/${props.RoomInfo.id}/book`})
+    }
 </script>
 
 <style scoped>

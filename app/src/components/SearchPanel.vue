@@ -2,31 +2,37 @@
     <div class="wrapper">
         <div class="search-panel">
             <v-sheet style="max-width: 700px;">
-                <v-form class="search-form">
+                <v-form fast-fail @submit.prevent class="search-form">
                     <div class="search-form-fields">
                         <v-text-field
                             v-model="location"
                             label="Локация"
                             width="200"
                             color="primary"
+                            :rules="locationRules"
+                            required
                         ></v-text-field>
 
                         <v-text-field
                             type="date"
                             v-model="filterForm.dateFrom"
                             label="От"
+                            :rules="dateRules"
+                            required
                         ></v-text-field>
 
                         <v-text-field
                             type="date"
                             v-model="filterForm.dateTo"
                             label="До"
+                            :rules="dateRules"
+                            required
                         ></v-text-field>
                     </div>
 
                     <div class="divider"></div>
 
-                    <v-btn block color="green">
+                    <v-btn block color="green" type="submit" @click="submitFilters">
                         Найти
                     </v-btn>
 
@@ -45,7 +51,6 @@
     import { storeToRefs } from 'pinia';
     
     import { useBaseStore } from '../store/modules/base';
-    import router from '../router/index';
 
     const baseStore = useBaseStore();
     const { hotels } = storeToRefs(baseStore);
@@ -59,12 +64,25 @@
         dateTo: null
     });
 
+    const locationRules = [
+        value => {
+          if (value) return true
+
+          return 'Location is required.'
+        }
+    ]
+
+    const dateRules = [
+        value => {
+          if (value) return true
+
+          return 'Date is required.'
+        }
+    ]
+
     const submitFilters = async () => {
-        await baseStore.fetchHotelsByFilters(location.value, filterForm.value);
-        if (hotels.value.length > 0) {
-            router.push({path: "/hotels"});
-        } else {
-            alert('По вашему запросу ничего не найдено!')
+        if (location.value && filterForm.value.dateFrom && filterForm.value.dateTo) {
+            await baseStore.fetchHotelsByFilters(location.value, filterForm.value);
         }
     }
 
@@ -98,7 +116,7 @@
         transform: translateY(-50px);
         opacity: 0;
         transition: 1s;
-        animation: show 0.8s 1;
+        animation: show 0.5s 1;
         animation-fill-mode: forwards;
     }
 

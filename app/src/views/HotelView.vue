@@ -9,14 +9,18 @@
             <SearchPanel @closed-panel="closePanel"></SearchPanel>
         </div>
 
-        <div class="hotel-list">
-            <HotelCard v-for="hotel in hotels" :hotel-info="hotel" :key="hotel.id"></HotelCard>
-        </div>
+        <div v-if="hotels.length > 0" class="hotel-block">
+            <div class="hotel-list">
+                <HotelCard v-for="hotel in hotels" :hotel-info="hotel" :key="hotel.id"></HotelCard>
+            </div>
 
-        <div class="pagination" v-if="hotels.length > 0">
-            <v-pagination :length="2"></v-pagination>
+            <div class="pagination" v-if="hotels.length > 0">
+                <v-pagination :length="2"></v-pagination>
+            </div>
         </div>
-
+        <div v-else class="none-hotels">
+            <h2>Ничего не найдено...</h2>
+        </div>
     </div>
 
 </template>
@@ -42,9 +46,15 @@
         isPanelOpened.value = true;
     };
 
-    // onMounted (async () => {
-    //     await baseStore.fetchHotels({})
-    // })
+    const location = 'Алтай'
+    const termData = {
+        dateFrom: '2024-09-12',
+        dateTo: '2024-09-12'
+    }
+
+    onMounted (async () => {
+        await baseStore.fetchHotelsByFilters(location, termData);
+    })
 
 </script>
 
@@ -64,16 +74,24 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 20px;
+    }
+
+    .none-hotels {
+        display: flex;
+        align-items: center;
     }
 
     .search-panel {
+        display: flex;
         padding-top: 50px;
         height: auto;
     }
 
     .open-panel-btn {
+        display: flex;
         padding: 20px;
-        transform: translateY(-30px);
+        transform: translateY(30px);
         opacity: 0;
         transition: 1s;
         animation: show 0.8s 1;

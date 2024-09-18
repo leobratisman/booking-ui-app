@@ -5,9 +5,7 @@
             <img style="height: 200px;" src="../images/1.jpg" alt="">
             <div class="hotel-info-text">
                 <h2>{{ hotelInfo.name }}</h2>
-                <p>{{ hotelInfo.location }}</p>
-                <p>{{ hotelInfo.rooms_quantity }}</p>
-                <p>{{ hotelInfo.rooms_left }}</p>
+                <p>{{ hotelInfo.location }} <span>(Комнат свободно: {{ hotelInfo.roomsLeft }})</span></p>
                 <div class="services">
                     <span v-for="service in hotelInfo.services">{{ service }}</span>
                 </div>

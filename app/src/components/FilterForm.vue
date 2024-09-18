@@ -1,10 +1,11 @@
 <template>
     <v-sheet class="mx-auto search-form" width="400">
 
-        <h1 style="text-align: center; margin-bottom: 20px;">Найди свой отель</h1>
+        <h1 class="greeting" style="text-align: center; margin-bottom: 20px;">Найди свой отель</h1>
 
         <v-form>
             <v-text-field
+                class="greeting"
                 v-model="location"
                 label="Локация"
             ></v-text-field>
@@ -83,6 +84,15 @@
         }
     }
 
+    @keyframes appear{
+        0%{
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
     .date {
         display: flex;
         gap: 10px;
@@ -114,5 +124,12 @@
     .divider {
         display: flex;
         height: 100vh;
+    }
+
+    .greeting {
+        opacity: 0;
+        transition: 1s;
+        animation: appear 2s 1;
+        animation-fill-mode: forwards;
     }
 </style>

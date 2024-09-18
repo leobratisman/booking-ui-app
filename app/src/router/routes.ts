@@ -23,12 +23,17 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/bookings',
-        component: () => import('../views/BookingView.vue'),
+        component: () => import('../views/MyBookingView.vue'),
     },
     {
         path: '/hotels/:hotelId/rooms',
         props: true,
         component: () => import('../views/RoomView.vue'),
+    },
+    {
+        path: '/rooms/:roomId/book',
+        props: true,
+        component: () => import('../views/BookRoomView.vue')
     },
 ];
 

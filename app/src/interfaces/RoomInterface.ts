@@ -6,6 +6,6 @@ export interface IRoom {
     quantity: number;
     description: string | null;
     services: Array<String>;
-    image_id: number | null;
-    rooms_left: number | null;
+    imageId: number;
+    roomsLeft: number;
 }
