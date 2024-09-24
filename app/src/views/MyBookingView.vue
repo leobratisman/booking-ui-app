@@ -1,6 +1,6 @@
 <template>
-    <div class="user-info-wrapper">
-        <div v-if="isAuthorized" class="bookings-info-block">
+    <div v-if="isAuthorized" class="wrapper">
+        <div  class="bookings-info-block">
             <h1 style="margin-bottom: 50px;">Мои бронирования</h1>
             <div class="booking-info" v-if="bookings">
                 <div v-for="booking in bookings" class="booking-info-block">
@@ -11,20 +11,8 @@
                 <p>У вас нет бронирований</p>
             </div>
         </div>
-        <div v-else>
-            <h2>Вы не авторизованы</h2>
-            <p>
-                <router-link to="/login">
-                Войти в учетную запись
-                </router-link>
-            </p>
-            <p>
-                <router-link to="/register">
-                Создать аккаунт
-                </router-link>
-            </p>
-        </div>
     </div>
+    <UnauthPage v-else></UnauthPage>
 </template>
 
 <script setup lang="ts">
@@ -36,6 +24,7 @@
 
     import BookingCard from '../components/BookingCard.vue';
     import { IRoom } from '../interfaces/RoomInterface';
+    import UnauthPage from '../components/UnauthPage.vue';
 
     const userStore = useUserStore();
     const baseStore = useBaseStore();
@@ -59,13 +48,13 @@
 </script>
 
 <style scoped>
-    .user-info-wrapper {
-        height: 100vh;
+
+    .wrapper {
+        min-height: 100vh;
         display: flex;
         margin-left: 50px;
         align-items: center;
     }
-
 
     .user-info {
         color: rgb(161, 161, 162);
@@ -76,4 +65,5 @@
     .info-attribute {
         font-size: 20px;
     }
+
 </style>

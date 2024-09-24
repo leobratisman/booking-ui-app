@@ -3,7 +3,15 @@ export interface IHotel {
     name: String;
     location: String;
     roomsQuantity: number;
-    services: JSON;
-    imageId: number;
+    services: Array<string>;
+    image: string;
     roomsLeft: number;
+}
+
+export interface IAddHotel {
+    name: String | null;
+    location: String | null;
+    roomsQuantity: number | null;
+    services: Array<string> | null;
+    image: File | null;
 }

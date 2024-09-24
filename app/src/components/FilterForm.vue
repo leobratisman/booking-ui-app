@@ -16,13 +16,13 @@
                 <div class="date">
                     <v-text-field
                         type="date"
-                        v-model="filterForm.dateFrom"
+                        v-model="filterForm.date_from"
                         label="От"
                     ></v-text-field>
 
                     <v-text-field
                         type="date"
-                        v-model="filterForm.dateTo"
+                        v-model="filterForm.date_to"
                         label="До"
                     ></v-text-field>
                 </div>
@@ -31,8 +31,8 @@
         <v-btn
             v-if="
             (location != null && location != '') &&
-            (filterForm.dateFrom != null && filterForm.dateFrom != '') &&
-            (filterForm.dateTo != null && filterForm.dateTo != '')
+            (filterForm.date_from != null && filterForm.date_from != '') &&
+            (filterForm.date_to != null && filterForm.date_to != '')
             "
             block
             color="green"
@@ -58,8 +58,8 @@
     const location = ref(null);
 
     const filterForm = ref({
-        dateFrom: null,
-        dateTo: null
+        date_from: null,
+        date_to: null
     });
 
     const submitFilters = async () => {
@@ -132,4 +132,5 @@
         animation: appear 2s 1;
         animation-fill-mode: forwards;
     }
+
 </style>

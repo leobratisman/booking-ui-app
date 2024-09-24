@@ -31,38 +31,14 @@
     import { ILoginForm } from '../../interfaces/AuthInterface';
     import { useUserStore } from '../../store/modules/user';
 
+    import { emailRules, passwordRules } from '../../utils/rules';
+
     const userStore = useUserStore();
 
     const loginForm = ref<ILoginForm>({
         email: null,
         password: null
     })
-
-    const emailRules = [
-        value => {
-          if (value) return true
-
-          return 'E-mail is requred.'
-        },
-        value => {
-          if (/.+@.+\..+/.test(value)) return true
-
-          return 'E-mail must be valid.'
-        },
-    ]
-
-    const passwordRules = [
-        value => {
-          if (value) return true
-
-          return 'Password is required.'
-        },
-        value => {
-          if (value?.length >= 1) return true
-
-          return 'Password must be greater than 0 characters.'
-        },
-    ]
 
     const isValid = ref(false);
 

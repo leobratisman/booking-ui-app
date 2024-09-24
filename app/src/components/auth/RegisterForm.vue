@@ -44,65 +44,14 @@
 
     import { IRegisterForm } from '../../interfaces/AuthInterface';
     import { useUserStore } from '../../store/modules/user';
+    import { emailRules, passwordRules, usernameRules, ageRules } from '../../utils/rules';
 
     const registerForm = ref<IRegisterForm>({
         email: null,
         password: null,
         age: null,
         username: null
-    })
-
-    const emailRules = [
-        value => {
-          if (value) return true
-
-          return 'E-mail is requred.'
-        },
-        value => {
-          if (/.+@.+\..+/.test(value)) return true
-
-          return 'E-mail must be valid.'
-        },
-    ]
-
-    const passwordRules = [
-        value => {
-          if (value) return true
-
-          return 'Password is required.'
-        },
-        value => {
-          if (value?.length >= 1) return true
-
-          return 'Password must be greater than 0 characters.'
-        },
-    ]
-
-    const ageRules = [
-        value => {
-          if (value) return true
-
-          return 'Age is required.'
-        },
-        value => {
-          if (Number(value)) return true
-
-          return 'Age should be number'
-        },
-    ]
-
-    const usernameRules = [
-        value => {
-          if (value) return true
-
-          return 'Username is required.'
-        },
-        value => {
-            if (value?.length >= 1) return true
-
-            return 'Username must be greater than 0 characters.'
-        },
-    ]
+    })    
 
     const userStore = useUserStore();
 

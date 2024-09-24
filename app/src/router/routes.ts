@@ -35,6 +35,10 @@ const routes: RouteRecordRaw[] = [
         props: true,
         component: () => import('../views/BookRoomView.vue')
     },
+    {
+        path: '/hotel/add',
+        component: () => import('../views/AddHotelPanel.vue')
+    },
 ];
 
 export default routes;

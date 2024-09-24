@@ -5,7 +5,7 @@ import { ITerm } from '../../interfaces/TermInterface';
 import { hotelApi } from '../../api/hotel';
 import { bookingApi } from '../../api/booking';
 import { roomApi } from '../../api/room';
-import { IHotel } from '../../interfaces/HotelInterface';
+import { IHotel, IAddHotel } from '../../interfaces/HotelInterface';
 
 const defaultState: BaseState = {
     hotels: [],
@@ -42,7 +42,7 @@ export const useBaseStore = defineStore('base-store', {
                 // console.log(err);
             }
         },
-        async addHotel(hotelData: IHotel) {
+        async addHotel(hotelData: IAddHotel) {
             try {
                 await hotelApi.addHotel(hotelData);
             } catch (err) {
@@ -85,6 +85,13 @@ export const useBaseStore = defineStore('base-store', {
             try {
                 await bookingApi.deleteBooking(bookingId);
                 await this.fetchBookings();
+            } catch (err) {
+                // console.log(err);
+            }
+        },
+        async fetchHotelImage(uuid: string) {
+            try {
+                return await hotelApi.getHotelImage(uuid);
             } catch (err) {
                 // console.log(err);
             }

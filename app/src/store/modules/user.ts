@@ -19,26 +19,25 @@ export const useUserStore = defineStore('user-store', {
                 const response = await UserApi.getCurrentUser();
                 this.user = response.data;
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         },
         async registerUser(userData: IRegisterForm) {
             try {
                 await AuthApi.registerUser(userData).then(() => this.loginUser(userData));
-            } catch (err) {
-                console.log(err);
+            } catch (err: any) {
+                alert(err.response.data.detail);
             }
         },
         async loginUser(userData: ILoginForm) {
             try {
-                console.log('logg');
                 const response = await AuthApi.loginUser(userData);
                 document.cookie =  `booking_access_token=${response.data.access_token}`;
 
-                await this.getCurrentUser()
+                await this.getCurrentUser();
                 router.push({path: '/me'});
-            } catch (err) {
-                console.log(err);
+            } catch (err: any) {
+                alert(err.response.data.detail);
             }
         },
         async logoutUser() {
@@ -46,7 +45,7 @@ export const useUserStore = defineStore('user-store', {
                 await AuthApi.logoutUser();
                 this.user = null;
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         }
     }

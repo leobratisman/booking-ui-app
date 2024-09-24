@@ -1,9 +1,9 @@
 <template>
 
     <div class="wrapper">
-        <v-container class="hotel-info">
+        <v-container class="room-info">
             <img style="height: 200px;" src="../images/1.jpg" alt="">
-            <div class="hotel-info-text">
+            <div class="room-info-text">
                 <div>
                     <h2>{{ RoomInfo.name }}</h2>
                     <p>{{ RoomInfo.description }}</p>
@@ -44,13 +44,21 @@
         max-width: 900px;
     }
 
-    .hotel-info {
+    .room-info {
         padding: 20px;
         display: flex;
         gap: 20px;
     }
 
-    .hotel-info-text {
+    @media (max-width: 700px) {
+        .room-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .room-info-text {
         display: flex;
         flex-wrap: wrap;
     }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn @click="backToRoom" color="primary" prepend-icon="mdi-keyboard-backspace" class="to-rooms-btn" variant="tonal">Номера</v-btn>
+        <v-btn @click="backToRoom" color="primary" prepend-icon="mdi-keyboard-backspace" class="to-rooms-btn" variant="outlined">Номера</v-btn>
     </div>
     <div class="wrapper" v-if="room">
         <v-container class="room-info">
@@ -57,7 +57,8 @@
     import { useUserStore } from '../store/modules/user';
     import { storeToRefs } from 'pinia';
     import router from '../router/index';
-import { ITerm } from '../interfaces/TermInterface';
+    import { ITerm } from '../interfaces/TermInterface';
+    import { dateRules } from '../utils/rules';
 
     const baseStore = useBaseStore();
     const userStore = useUserStore();
@@ -74,14 +75,6 @@ import { ITerm } from '../interfaces/TermInterface';
         dateFrom: null,
         dateTo: null
     });
-
-    const dateRules = [
-        value => {
-          if (value) return true
-
-          return 'Date is required.'
-        }
-    ]
 
     const submitBook = async () => {
         await baseStore.addBooking(props.roomId, termForm.value);
@@ -107,10 +100,11 @@ import { ITerm } from '../interfaces/TermInterface';
     .wrapper {
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        min-height: 100vh;
         align-items: center;
         justify-content: center;
         gap: 40px;
+        padding: 80px 40px;
     }
 
     .room-info {
@@ -132,5 +126,11 @@ import { ITerm } from '../interfaces/TermInterface';
         position: fixed;
         margin-top: 20px;
         margin-left: 20px;
+    }
+
+    @media (max-width: 700px) {
+        .to-rooms-btn {
+            margin-left: 40px;
+        }
     }
 </style>

@@ -15,7 +15,7 @@
 
                         <v-text-field
                             type="date"
-                            v-model="filterForm.dateFrom"
+                            v-model="filterForm.date_from"
                             label="От"
                             :rules="dateRules"
                             required
@@ -23,7 +23,7 @@
 
                         <v-text-field
                             type="date"
-                            v-model="filterForm.dateTo"
+                            v-model="filterForm.date_to"
                             label="До"
                             :rules="dateRules"
                             required
@@ -48,40 +48,23 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
-    import { storeToRefs } from 'pinia';
     
     import { useBaseStore } from '../store/modules/base';
+    import { dateRules, locationRules } from '../utils/rules';
 
     const baseStore = useBaseStore();
-    const { hotels } = storeToRefs(baseStore);
 
     const emit = defineEmits(['closedPanel'])
 
     const location = ref(null);
 
     const filterForm = ref({
-        dateFrom: null,
-        dateTo: null
+        date_from: null,
+        date_to: null
     });
 
-    const locationRules = [
-        value => {
-          if (value) return true
-
-          return 'Location is required.'
-        }
-    ]
-
-    const dateRules = [
-        value => {
-          if (value) return true
-
-          return 'Date is required.'
-        }
-    ]
-
     const submitFilters = async () => {
-        if (location.value && filterForm.value.dateFrom && filterForm.value.dateTo) {
+        if (location.value && filterForm.value.date_from && filterForm.value.date_to) {
             await baseStore.fetchHotelsByFilters(location.value, filterForm.value);
         }
     }
@@ -122,5 +105,14 @@
 
     .close-btn {
         display: flex;
+    }
+
+    @media (max-width: 700px) {
+        .search-form-fields {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            gap: 10px;
+        }
     }
 </style>
